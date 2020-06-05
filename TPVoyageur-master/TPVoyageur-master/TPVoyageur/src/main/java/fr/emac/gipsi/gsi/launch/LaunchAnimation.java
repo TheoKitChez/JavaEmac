@@ -32,7 +32,8 @@ public class LaunchAnimation {
 		ab.setEcranFin(ListScreen.first());
 		
 		ab.runAnimation();
-
+		
 	}
-
 }
+
+
