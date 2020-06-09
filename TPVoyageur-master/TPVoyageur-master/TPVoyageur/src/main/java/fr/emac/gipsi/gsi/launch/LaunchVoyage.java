@@ -31,7 +31,7 @@ public class LaunchVoyage {
 		p1.setImage(ListScreen.first());
 		p1.setEchantillonRoche(ListScreen.second());
 		p1.setEchantillonSol(ListScreen.first());
-		p1.setRayon(1);
+		p1.setRayon(0);
 		p1.getPos().setX(2);
 		p1.getPos().setY(2);
 		
@@ -42,12 +42,24 @@ public class LaunchVoyage {
 		p2.setImage(ListScreen.first());
 		p2.setEchantillonRoche(ListScreen.second());
 		p2.setEchantillonSol(ListScreen.first());
-		p2.setRayon(1);
+		p2.setRayon(0);
 		p2.getPos().setX(5);
 		p2.getPos().setY(5);
 		p2.getListAccessibilite().add(p1);
 		
 		listPlanete.add(p2);
+		
+		Planete p3= new Planete();
+		p3.setColorName("Green");
+		p3.setImage(ListScreen.first());
+		p3.setEchantillonRoche(ListScreen.second());
+		p3.setEchantillonSol(ListScreen.first());
+		p3.setRayon(0);
+		p3.getPos().setX(7);
+		p3.getPos().setY(5);
+		p3.getListAccessibilite().add(p1);
+		
+		listPlanete.add(p3);
 
 		
 		
