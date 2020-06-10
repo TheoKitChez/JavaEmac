@@ -81,23 +81,37 @@ public class Voyage extends AbstractVoyage {
     		if ((posr.getX()== posi.get(X))  && (posr.getY()== posi.getY())) {
     			indp = i;      			
     		}
+    		
     	}
-     	
-    	/*On cherche d'abord la distance la plus courte entre le corps du robots et les planètes  */
+    	//On cherche la distance minimale parmis les planètes accessibles
+
+        // indice de la planète ou on est: indp
+
+        // On connait l'indice de la planète ou l'ont est ( kintana fait ca)
+        // ensuite on doit recup les planetes accesibles depuis celle ou on est , et on creer
+        //la liste avec les distances!
+        //ensuite on cherche la distance minimale
     	
-    	float distance [] = new float[3];
+    	Planete Planete_acc = getListPlanete().get(indp);
+    	ArrayList<Planete> Liste_acc = Planete_acc.getListAccessibilite(); 
+    	float distance_acc [] = new float [Liste_acc.size()];
     	float min = Float.MAX_VALUE;
-    	for (int i = 0; (i<(distance.length)) ; i++ ) {
-    		
-    		
-    		distance[i]= (float) Math.sqrt(Math.pow((a.getX()-dp.getX()), 2)+Math.pow((a.getY()-dp.getY()), 2));
-    		if (distance[i] < min) {
-                    min = distance[i];
-    				indp=i;   				
+    	int ind_PC; 
+    	for (int i = 0; (i<(distance_acc.length)) ; i++ ) {
+    		Position dp = Liste_acc.get(i).getPos(); 
+    		distance_acc[i]= (float) Math.sqrt(Math.pow((posr.getX()-dp.getX()), 2)+Math.pow((posr.getY()-dp.getY()), 2));
+    		if (distance_acc[i] < min) {
+                    min = distance_acc[i];
+    				ind_PC=i;   				
             }
     	
-    	
     	}
+
+    	
+    	
+    	
+    	
+    	
     	
     	/* Il faut définir la direction de la planète par rapport au robot.*/
     	
