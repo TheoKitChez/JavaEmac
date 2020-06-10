@@ -208,7 +208,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     		setPosTete(new Position(getPosTete().getX()+1,getPosTete().getY()+1));
 
-    		P
     		setDirection("S");
         // TODO Auto-generated method stub
         
@@ -229,8 +228,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     		setPosTete(new Position(getPosTete().getX()+1,getPosTete().getY()+1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
 
     		
     		setDirection("E");

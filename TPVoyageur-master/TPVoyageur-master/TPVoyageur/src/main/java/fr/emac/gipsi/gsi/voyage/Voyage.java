@@ -71,14 +71,16 @@ public class Voyage extends AbstractVoyage {
      * @see fr.emac.gipsi.gsi.voyage.AbstractVoyage#pilotageSimuler()
      */
     @Override
-    public void lancementSimuler() {
+    public void lancementSimuler() { 
+    	afficheEcran();
         // TODO Auto-generated method stub
     	/*On cherche la planète sur laquelle se trouve le robot*/
     	Position posr = getSimulatedvoyageur().getPosBody(); 	/* position du robot et donc de la planète sur laquelle se trouve le robot*/
-    	Position posi = getListPlanete().get(i).getPos();			/* position de la i ème planète de la liste*/ 
-    	int indp;  												/* indice de la planète dans la liste de planètes*/
+    			/* position de la i ème planète de la liste*/ 
+    	int indp=0;  												
     	for (int i = 0; (i<(getListPlanete().size())); i++) {
-    		if ((posr.getX()== posi.get(X))  && (posr.getY()== posi.getY())) {
+    		Position posi = getListPlanete().get(i).getPos();	/* indice de la planète dans la liste de planètes*/
+    		if ((posr.getX()== posi.getX())  && (posr.getY()== posi.getY())) {
     			indp = i;      			
     		}
     		
@@ -96,7 +98,7 @@ public class Voyage extends AbstractVoyage {
     	ArrayList<Planete> Liste_acc = Planete_acc.getListAccessibilite(); 
     	float distance_acc [] = new float [Liste_acc.size()];
     	float min = Float.MAX_VALUE;
-    	int ind_PC; 
+    	int ind_PC=0; 
     	for (int i = 0; (i<(distance_acc.length)) ; i++ ) {
     		Position dp = Liste_acc.get(i).getPos(); 
     		distance_acc[i]= (float) Math.sqrt(Math.pow((posr.getX()-dp.getX()), 2)+Math.pow((posr.getY()-dp.getY()), 2));
@@ -108,30 +110,173 @@ public class Voyage extends AbstractVoyage {
     	}
 
     	
-    	
-    	
-    	
-    	
-    	
     	/* Il faut définir la direction de la planète par rapport au robot.*/
     	
-    	Position posPC = getListPlanete().get(ind_PC).getPos(); /* position de la planète où on veut aller*/
-    	String directionp ; 
-    	if ((posr.getX()== posPC.getX()) && (posr.getY()== posPC.getY())) { 
-    		
-    	}
-      
-    		
-    	}
+    	Position posPC = Liste_acc.get(ind_PC).getPos(); /* position de la planète où on veut aller*/
+    	String directionP ;
+    	String directionR= getSimulatedvoyageur().getDirection();
+    	int RX = posr.getX(); 
+    	int RY = posr.getY();
+    	int PCX= posPC.getX();
+    	int PCY = posPC.getY();
 
-        //afficheEcran();
+    	/* Cas où la planète cible se situe en diagonale du robot*/
+    	
+    	if ((RX !=PCX) && (RY != PCY)) {
+    		if ((directionR == "E")|| (directionR== "O")) {
+    			while (((directionR=="E")&&(RY>PCY)) || ((directionR == "O") &&(RY<PCY))) {
+    				getSimulatedvoyageur().goBackward();
+    				RY = getSimulatedvoyageur().getPosBody().getY();
+    			}
+    			while (((directionR == "E") && (RY<PCY)) || ((directionR == "O") && (RY>PCY))) {
+    				getSimulatedvoyageur().goForward();
+    				RY = getSimulatedvoyageur().getPosBody().getY();
+    		}
+    		}
+    		if ((directionR == "N")||(directionR =="S")) {
+    			while (((directionR=="N")&&(RX<PCX)) || ((directionR =="S") && (RX>PCX))) {
+    				getSimulatedvoyageur().goBackward();
+    				RX = getSimulatedvoyageur().getPosBody().getX();  
+    			}
+    			while (((directionR == "N")&& (RX>PCX))|| ((directionR== "S")&& (RX <PCX))) {
+    				getSimulatedvoyageur().goForward();
+    				RX = getSimulatedvoyageur().getPosBody().getX(); 
+    			}
+    		}
+    		}
+    	
+    	/* 1er cas la planète se situe à l'Est du robot*/
+    	if ((RX==PCX) && (RY < PCY)) { 
+    		directionP = "E";
+    		if (directionP==directionR) { 
+    			while (RY< PCY) {
+    				getSimulatedvoyageur().goForward();
+    				RY = getSimulatedvoyageur().getPosBody().getY();
+    			}
+    		}
+    		else if (directionR=="N") {
+    			getSimulatedvoyageur().turnRight();
+    			while (RY< PCY) {
+    				getSimulatedvoyageur().goForward();
+    				RY = getSimulatedvoyageur().getPosBody().getY();
+    			}
+    		}
+    		else if (directionR == "O") {
+    			while (RY< PCY) {
+    				getSimulatedvoyageur().goBackward();
+    				RY = getSimulatedvoyageur().getPosBody().getY();
+    				}
+    		}
+    		else if (directionR == "S") {
+    			getSimulatedvoyageur().turnLeft();
+    			while (RY< PCY) {
+    				getSimulatedvoyageur().goForward();
+    				RY = getSimulatedvoyageur().getPosBody().getY(); 
+    			}
+    		}
+    			
+    			
+    		}
+    	/*2 ème cas, la planète est à l'Ouest du voyageur*/
+    	if ((RX==PCX) && (RY > PCY)) { 
+           directionP = "O";
+            if (directionP==directionR) { 
+            	while (RY>PCY) {
+            		getSimulatedvoyageur().goForward();
+            		RY = getSimulatedvoyageur().getPosBody().getY(); 
+                }
+            }
+            else if (directionR=="N") {
+            	getSimulatedvoyageur().turnLeft();
+                while (RY>PCY) {
+                	getSimulatedvoyageur().goForward();
+                	RY = getSimulatedvoyageur().getPosBody().getY();
+                }
+            }
+            else if (directionR == "E") {
+                
+            	while (RY>PCY) {
+            		getSimulatedvoyageur().goBackward();
+            		RY = getSimulatedvoyageur().getPosBody().getY();
+            	}
+            }
+            else if (directionR == "S") {
+            	getSimulatedvoyageur().turnRight();
+            	while (RY>PCY) {
+            		getSimulatedvoyageur().goForward();
+            		RY = getSimulatedvoyageur().getPosBody().getY();
+            	}
+            }
+    	}
+                
+    	/* Cas robot et planète aligné selon Y, et robot en dessous de la planète ( au Nord)  */
+        if ((RX>PCX) && (RY == PCY)) { 
+            directionP = "N";
+            if (directionP==directionR) { 
+            	while (RX> PCX) {
+            		getSimulatedvoyageur().goForward();
+            		RX = getSimulatedvoyageur().getPosBody().getX(); 
+                    }
+                }
+            else if (directionR=="E") {
+                getSimulatedvoyageur().turnLeft();
+                while (RX> PCX) {
+                    getSimulatedvoyageur().goForward();
+                    RX = getSimulatedvoyageur().getPosBody().getX();  
+                }
+                }
+            else if (directionR == "O") {
+                getSimulatedvoyageur().turnRight();
+                while (RX> PCX) {
+                    getSimulatedvoyageur().goForward();
+                    RX = getSimulatedvoyageur().getPosBody().getX();      
+                }
+            }
+            else if (directionR == "S") {
+                while (RX> PCX) {
+                    getSimulatedvoyageur().goBackward();
+                    RX = getSimulatedvoyageur().getPosBody().getX();  
+                } 
+
+
+                }    
+            }
+        /* Cas robot et planète aligné selon Y, et robot au dessus de la planète (au nord de la planète) */
+        if ((RX<PCX) && (RY == PCY)) {
+            directionP = "S";
+            if (directionP==directionR) { 
+                while (RX<PCX) {
+                	getSimulatedvoyageur().goForward();
+                	RX = getSimulatedvoyageur().getPosBody().getX();     
+                }
+                }   
+            else if (directionR=="E") {
+                getSimulatedvoyageur().turnRight();
+                while (RX < PCX) {
+                    getSimulatedvoyageur().goForward();
+                    RX = getSimulatedvoyageur().getPosBody().getX();  
+                    }
+                }
+            else if (directionR == "O") {
+                getSimulatedvoyageur().turnLeft();
+                while (RX < PCX) {
+                    getSimulatedvoyageur().goForward();
+                    RX = getSimulatedvoyageur().getPosBody().getX();  
+                        }
+                }
+            else if (directionR == "N") {
+                while (RX<PCX) {
+                    getSimulatedvoyageur().goBackward();
+                    RX = getSimulatedvoyageur().getPosBody().getX();  }
+                }
+                    
+                    
+                }
+    		
+    	afficheEcran();    	}	
+    	
+}
+
         
-        /*getSimulatedvoyageur().goForward();
-        getSimulatedvoyageur().turnRight();
-        getSimulatedvoyageur().goForward();
-        getSimulatedvoyageur().turnLeft();
-        getSimulatedvoyageur().goForward();
-        getSimulatedvoyageur().turnRight(); 
-       afficheEcran();*/
-    }
+    
 

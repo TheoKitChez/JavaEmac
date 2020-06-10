@@ -34,8 +34,8 @@ public class LaunchVoyage {
 		p1.setRayon(0);
 		p1.getPos().setX(2);
 		p1.getPos().setY(2);
+		 
 		
-		listPlanete.add(p1);
 		
 		Planete p2 = new Planete();
 		p2.setColorName("DeepPink");
@@ -47,7 +47,7 @@ public class LaunchVoyage {
 		p2.getPos().setY(5);
 		p2.getListAccessibilite().add(p1);
 		
-		listPlanete.add(p2);
+		
 		
 		Planete p3= new Planete();
 		p3.setColorName("Green");
@@ -59,9 +59,13 @@ public class LaunchVoyage {
 		p3.getPos().setY(5);
 		p3.getListAccessibilite().add(p1);
 		
-		listPlanete.add(p3);
-
 		
+
+		p1.getListAccessibilite().add(p2);
+		p1.getListAccessibilite().add(p3); 
+		listPlanete.add(p1);
+		listPlanete.add(p2);
+		listPlanete.add(p3);
 		
 		AbstractVoyageur simulatedVoyageur = new VoyageurSimuler();
 		
