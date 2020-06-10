@@ -102,7 +102,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     	
     	if (direction == "N") {
     		
-    		setPosTete(new Position(getPosTete().getX()+2,getPosTete().getY()));
+    		
 
     		Position nouvellePositionT = new Position();
     		Position nouvellePositionB = new Position();
@@ -118,7 +118,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     	}
     	else if (direction == "S") {
     		
-    		setPosTete(new Position(getPosTete().getX()-2,getPosTete().getY()));
+    		
 
     		Position nouvellePositionT = new Position();
     		Position nouvellePositionB = new Position();
@@ -134,7 +134,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     	}
     	else if (direction == "E") {
-    		setPosTete(new Position(getPosTete().getX(),getPosTete().getY()-2));
+    		
 
     		Position nouvellePositionT = new Position();
     		Position nouvellePositionB = new Position();
@@ -149,7 +149,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
    
     	}
     	else if (direction == "O") {
-    		setPosTete(new Position(getPosTete().getX(),getPosTete().getY()+2));
+    		
 
     		Position nouvellePositionT = new Position();
     		Position nouvellePositionB = new Position();
@@ -179,15 +179,9 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     		setPosTete(new Position(getPosTete().getX()+1,getPosTete().getY()-1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
+    		
 
-    		nouvellePositionT.setX(getPosTete().getX());
-    		nouvellePositionB.setX(getPosBody().getX());
-    		nouvellePositionT.setY(getPosTete().getY()-1);
-    		nouvellePositionB.setY(getPosBody().getY()-1);
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
+    		
     		
     		setDirection("O");
     	}
@@ -196,15 +190,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     	
     		setPosTete(new Position(getPosTete().getX()-1,getPosTete().getY()+1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
-
-    		nouvellePositionT.setX(getPosTete().getX());
-    		nouvellePositionB.setX(getPosBody().getX());
-    		nouvellePositionT.setY(getPosTete().getY()+1);
-    		nouvellePositionB.setY(getPosBody().getY()+1);
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
+    		
     		
     		setDirection("E");
     		
@@ -212,15 +198,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     	else if (direction == "E") {
     		setPosTete(new Position(getPosTete().getX()-1,getPosTete().getY()-1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
-
-    		nouvellePositionT.setX(getPosTete().getX()-1);
-    		nouvellePositionB.setX(getPosBody().getX()-1);
-    		nouvellePositionT.setY(getPosTete().getY());
-    		nouvellePositionB.setY(getPosBody().getY());
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
+    		
     		
     		setDirection("N");
     	
@@ -230,15 +208,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     		setPosTete(new Position(getPosTete().getX()+1,getPosTete().getY()+1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
-
-    		nouvellePositionT.setX(getPosTete().getX()+1);
-    		nouvellePositionB.setX(getPosBody().getX()+1);
-    		nouvellePositionT.setY(getPosTete().getY());
-    		nouvellePositionB.setY(getPosBody().getY());
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
+    		P
     		setDirection("S");
         // TODO Auto-generated method stub
         
@@ -262,27 +232,13 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		Position nouvellePositionT = new Position();
     		Position nouvellePositionB = new Position();
 
-    		nouvellePositionT.setX(getPosTete().getX());
-    		nouvellePositionB.setX(getPosBody().getX());
-    		nouvellePositionT.setY(getPosTete().getY()+1);
-    		nouvellePositionB.setY(getPosBody().getY()+1);
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
+    		
     		setDirection("E");
     	}
     	else if (direction == "S") {
     
     		setPosTete(new Position(getPosTete().getX()-1,getPosTete().getY()-1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
-
-    		nouvellePositionT.setX(getPosTete().getX());
-    		nouvellePositionB.setX(getPosBody().getX());
-    		nouvellePositionT.setY(getPosTete().getY()-1);
-    		nouvellePositionB.setY(getPosBody().getY()-1);
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
     		
     		setDirection("O");
     	}
@@ -290,15 +246,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     		setPosTete(new Position(getPosTete().getX()+1,getPosTete().getY()-1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
-
-    		nouvellePositionT.setX(getPosTete().getX()+1);
-    		nouvellePositionB.setX(getPosBody().getX()+1);
-    		nouvellePositionT.setY(getPosTete().getY());
-    		nouvellePositionB.setY(getPosBody().getY());
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
     		
     		setDirection("S");
    
@@ -307,15 +254,7 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		
     		setPosTete(new Position(getPosTete().getX()-1,getPosTete().getY()+1));
 
-    		Position nouvellePositionT = new Position();
-    		Position nouvellePositionB = new Position();
-
-    		nouvellePositionT.setX(getPosTete().getX()-1);
-    		nouvellePositionB.setX(getPosBody().getX()-1);
-    		nouvellePositionT.setY(getPosTete().getY());
-    		nouvellePositionB.setY(getPosBody().getY());
-    		setPosBody(nouvellePositionB);
-    		setPosTete(nouvellePositionT);
+    		
     	
         setDirection("N");
     	}
