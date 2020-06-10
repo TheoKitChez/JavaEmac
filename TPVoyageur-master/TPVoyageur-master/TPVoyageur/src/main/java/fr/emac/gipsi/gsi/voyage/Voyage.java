@@ -73,24 +73,38 @@ public class Voyage extends AbstractVoyage {
     @Override
     public void lancementSimuler() {
         // TODO Auto-generated method stub
+    	/*On cherche la planète sur laquelle se trouve le robot*/
+    	Position posr = getSimulatedvoyageur().getPosBody(); 	/* position du robot et donc de la planète sur laquelle se trouve le robot*/
+    	Position posi = getListPlanete().get(i).getPos();			/* position de la i ème planète de la liste*/ 
+    	int indp;  												/* indice de la planète dans la liste de planètes*/
+    	for (int i = 0; (i<(getListPlanete().size())); i++) {
+    		if ((posr.getX()== posi.get(X))  && (posr.getY()== posi.getY())) {
+    			indp = i;      			
+    		}
+    	}
+     	
     	/*On cherche d'abord la distance la plus courte entre le corps du robots et les planètes  */
-    	Position a = getSimulatedvoyageur().getPosBody();
+    	
     	float distance [] = new float[3];
     	float min = Float.MAX_VALUE;
-    	int indp = 0;
     	for (int i = 0; (i<(distance.length)) ; i++ ) {
     		
-    		Position dp = getListPlanete().get(i).getPos();
+    		
     		distance[i]= (float) Math.sqrt(Math.pow((a.getX()-dp.getX()), 2)+Math.pow((a.getY()-dp.getY()), 2));
     		if (distance[i] < min) {
                     min = distance[i];
     				indp=i;   				
             }
-    	Position posPlaneteCible = getListPlanete().get(indp).getPos();
     	
-    	while (a.getY()> posPlaneteCible.getY()) {
-    		getSimulatedvoyageur().
+    	
     	}
+    	
+    	/* Il faut définir la direction de la planète par rapport au robot.*/
+    	
+    	Position posPC = getListPlanete().get(ind_PC).getPos(); /* position de la planète où on veut aller*/
+    	String directionp ; 
+    	if ((posr.getX()== posPC.getX()) && (posr.getY()== posPC.getY())) { 
+    		
     	}
       
     		
