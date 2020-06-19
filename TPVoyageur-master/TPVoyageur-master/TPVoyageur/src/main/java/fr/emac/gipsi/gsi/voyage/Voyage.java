@@ -356,12 +356,94 @@ public class Voyage extends AbstractVoyage {
     	return result;
     	}
     
+   /*On crée la méthode qui renvoie l'indice dans la liste de planète d'une planète donnée*/ 
+    public int indicePlanete(Planete a) {
+    	Position posP=a.getPos(); 
+    	int indicePlanete=0; 
+    	for (int i=0; (i<getListPlanete().size()); i++){
+    		if (posP==getListPlanete().get(i).getPos()) {
+    			indicePlanete = i; 
+    		}
+    	}
+    	return indicePlanete; 		
+    }
+    /*Cette méthode nous renvoie la distance entre 2 planètes*/
+    
+    public float distance(Planete a,Planete b) {
+
+        int k=indicePlanete(a);
+        int l=indicePlanete(b);
+        float distance;
+        /*On crée la matrice des distances entre chaque planète*/
+    	int n = getListPlanete().size(); 
+    	float[][] M_distance=new float[n][n];
+        for(int i=0;i<n; i++) {
+            for(int j=0;j<n;j++) {
+                float x=getListPlanete().get(i).getPos().getX()-getListPlanete().get(j).getPos().getX();
+                float y=getListPlanete().get(i).getPos().getY()-getListPlanete().get(j).getPos().getY();
+                M_distance[i][j]= (float) Math.sqrt(x*x+y*y);
+                
+            }
+        }
+
+        distance= M_distance[k][l];
+
+        return distance; 
+
+    }
+    
+    /*On crée la méthode qui renvoie pour une planète donnée les planètes sur lesquelles on peut aller
+     * et vérifiant les conditions suivantes : sans échantillon, et accessible. */
+    public ArrayList<Planete> PlanetePossible(Planete PlaneteActuL) {
+    	
+    	ArrayList<Planete> PlanetePossible = new ArrayList<Planete>();  
+    	ArrayList<Planete> PlaneteSS = new ArrayList<Planete>(); /*Planetes sans échantillons*/
+    	for(int i=0; (i< getListPlanete().size()); i++ ) {
+    		if ((getListPlanete().get(i).getEchantillonRoche()== null) && (getListPlanete().get(i).getEchantillonSol()== null)) {
+    			PlaneteSS.add(getListPlanete().get(i)); 
+    		} 
+    	}
+    	for (int i=0; (i<PlaneteActuL.getListAccessibilite().size()); i++) {
+			if (PlaneteSS.contains(PlaneteActuL.getListAccessibilite().get(i))) {
+				PlanetePossible.add(PlaneteActuL.getListAccessibilite().get(i)); 
+				}
+			}
+    	return PlanetePossible; 
+				
+    }
+    
+    
+    
+
     /**/
     public ArrayList<Planete> cheminopt(Planete a, Planete b) {
+    	ArrayList<Planete> PlaneteAV = PlaneteAV();
+    	ArrayList<Planete> cheminopt =new  ArrayList<Planete>();
+    	ArrayList<Planete> PlaneteSS = new ArrayList<Planete>(); /*Planetes sans échantillons*/ 
+    	cheminopt.add(a); 
+    	for(int i=0; (i< getListPlanete().size()); i++ ) {
+    		if ((getListPlanete().get(i).getEchantillonRoche()== null) && (getListPlanete().get(i).getEchantillonSol()== null)) {
+    			PlaneteSS.add(getListPlanete().get(i)); 
+    		} 
+    	}
+    	float distancemin= Float.MAX_VALUE;
+    	float distanceparcourue;
+    	if (a.getListAccessibilite().contains(b)) {
+    		distancemin=distance(a,b);
+    		cheminopt.add(b); 
+    		}
+    	else {
+    		
+    		
+    				
+    			}
+    			
+    		}
+    	}	
     	
     	
     	
-    	return ; 
+    	return cheminopt; 
     }
     
     
