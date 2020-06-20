@@ -412,7 +412,13 @@ public class Voyage extends AbstractVoyage {
 				
     }
     
-    
+    public void cheminrecursif(Planete PlaneteActuL, Planete PlaneteFin,indice) {
+    	ArrayList<Planete> PlanetePossible= PlanetePossible(PlaneteActuL); 
+    	while (PlaneteActuL!=PlaneteFin) {
+    		
+    	}
+    	
+    }
     
 
     /**/
@@ -420,7 +426,9 @@ public class Voyage extends AbstractVoyage {
     	ArrayList<Planete> PlaneteAV = PlaneteAV();
     	ArrayList<Planete> cheminopt =new  ArrayList<Planete>();
     	ArrayList<Planete> PlaneteSS = new ArrayList<Planete>(); /*Planetes sans échantillons*/ 
-    	cheminopt.add(a); 
+    	cheminopt.add(a);
+    	Planete PlaneteActuL = a;
+    	ArrayList<Planete> PlanetePossible = new ArrayList<Planete>(); 
     	for(int i=0; (i< getListPlanete().size()); i++ ) {
     		if ((getListPlanete().get(i).getEchantillonRoche()== null) && (getListPlanete().get(i).getEchantillonSol()== null)) {
     			PlaneteSS.add(getListPlanete().get(i)); 
@@ -432,14 +440,17 @@ public class Voyage extends AbstractVoyage {
     		distancemin=distance(a,b);
     		cheminopt.add(b); 
     		}
-    	else {
-    		
+    	else { 
+    		PlanetePossible= PlanetePossible(PlaneteActuL); 
+    		for (int j = 0; j<(PlanetePossible.size()); j++) {
+    			
+    		}
     		
     				
     			}
     			
-    		}
-    	}	
+    		
+    		
     	
     	
     	
