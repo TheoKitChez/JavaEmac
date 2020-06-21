@@ -4,7 +4,9 @@
 package fr.emac.gipsi.gsi.launch;
 
 import fr.emac.gipsi.gsi.animation.AbstractAnimation;
+import fr.emac.gipsi.gsi.animation.AnimationBisligne;
 import fr.emac.gipsi.gsi.animation.AnimationByColumn;
+import fr.emac.gipsi.gsi.animation.AnimationDiag;
 import fr.emac.gipsi.gsi.animation.AnimationFlash;
 import fr.emac.gipsi.gsi.ecran.ListScreen;
 
@@ -19,17 +21,17 @@ public class LaunchAnimation {
 	 */
 	public static void main(String[] args) {
 		
-		AbstractAnimation aa = new AnimationFlash();
-		aa.setEcranDeb(ListScreen.first());
-		aa.setEcranFin(ListScreen.second());
+		AbstractAnimation aa = new AnimationBisligne();
+		aa.setEcranDeb(ListScreen.Hulk());
+		aa.setEcranFin(ListScreen.ww());
 		
 		aa.runAnimation();
 
 		aa.wait(1000);
 		
-		AbstractAnimation ab = new AnimationFlash();
-		ab.setEcranDeb(ListScreen.second());
-		ab.setEcranFin(ListScreen.first());
+		AbstractAnimation ab = new AnimationDiag();
+		ab.setEcranDeb(ListScreen.IronMan());
+		ab.setEcranFin(ListScreen.ww());
 		
 		ab.runAnimation();
 		

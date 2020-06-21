@@ -114,7 +114,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		setPosBody(nouvellePositionB);
     		setPosTete(nouvellePositionT);
     		
-    		setDirection("S");
     	}
     	else if (direction == "S") {
     		
@@ -130,8 +129,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		setPosBody(nouvellePositionB);
     		setPosTete(nouvellePositionT);
     		
-    		setDirection("N");
-    		
     	}
     	else if (direction == "E") {
     		
@@ -145,7 +142,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		nouvellePositionB.setY(getPosBody().getY()-1);
     		setPosBody(nouvellePositionB);
     		setPosTete(nouvellePositionT);
-    		setDirection("O");
    
     	}
     	else if (direction == "O") {
@@ -161,7 +157,6 @@ public class VoyageurSimuler extends AbstractVoyageur {
     		setPosBody(nouvellePositionB);
     		setPosTete(nouvellePositionT);
     		
-    		setDirection("E");
     	}
         // TODO Auto-generated method stub
         ;

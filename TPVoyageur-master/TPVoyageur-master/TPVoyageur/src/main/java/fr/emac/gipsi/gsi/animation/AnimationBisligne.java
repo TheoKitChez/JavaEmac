@@ -9,13 +9,13 @@ import fr.emac.gipsi.gsi.screen.Screen;
  * @author truptil
  *
  */
-public class Animationligne extends AbstractAnimation{
+public class AnimationBisligne extends AbstractAnimation {
  
     /**
      * 
      */
-    public Animationligne() {
-        
+    public AnimationBisligne() {
+
     }
 
     @Override
@@ -26,15 +26,17 @@ public class Animationligne extends AbstractAnimation{
             System.out.println("startSend");
             this.showScreen(ecranInt);
             for(int col=0;col<ecranInt.getColMax()+1;col++) {
-                ecranInt.updateColorByXY(ligne, col, ecranFin.getColorByXY(ligne,col));
+                if (ligne%2!=0) {
+                    ecranInt.updateColorByXY(26-ligne, col, ecranFin.getColorByXY(26-ligne,col));}
+                else {ecranInt.updateColorByXY(ligne, col, ecranFin.getColorByXY(ligne,col));} 
             }
             this.wait(100);
-            
+
         }
         this.showScreen(ecranInt);
-        
+
     }
 
-    
+
 
 }

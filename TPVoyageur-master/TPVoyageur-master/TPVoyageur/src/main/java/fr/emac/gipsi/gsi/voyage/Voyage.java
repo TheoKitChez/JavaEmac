@@ -3,6 +3,14 @@
  */
 package fr.emac.gipsi.gsi.voyage;
 
+import fr.emac.gipsi.gsi.animation.AbstractAnimation;
+import fr.emac.gipsi.gsi.animation.AnimationBisligne;
+import fr.emac.gipsi.gsi.animation.AnimationByColumn;
+import fr.emac.gipsi.gsi.animation.AnimationDiag;
+import fr.emac.gipsi.gsi.animation.AnimationFlash;
+import fr.emac.gipsi.gsi.animation.AnimationRideau;
+import fr.emac.gipsi.gsi.animation.Animationligne;
+import fr.emac.gipsi.gsi.ecran.ListScreen;
 import fr.emac.gipsi.gsi.voyageur.AbstractVoyageur;
 
 import java.util.ArrayList;
@@ -75,13 +83,27 @@ public class Voyage extends AbstractVoyage {
     
     /* ci dessous plusieurs méthodes que l'ont va utiliser dans lancement simuler*/
     
-    
+    /*On cherche la planète sur laquelle se trouve le robot*/
+    public Planete planeteActuL(Position posr) {
+	/*Position posr = getSimulatedvoyageur().getPosBody();*/ 	/* position du robot et donc de la planète sur laquelle se trouve le robot*/
+			/* position de la i ème planète de la liste*/ 
+	int indp=0;  												
+	for (int i = 0; (i<(getListPlanete().size())); i++) {
+		Position posi = getListPlanete().get(i).getPos();	/* indice de la planète dans la liste de planètes*/
+		if ((posr.getX()== posi.getX())  && (posr.getY()== posi.getY())) {
+			indp = i;      			
+		}
+		
+	}
+	return getListPlanete().get(indp); 
+    }
     /* On dresse la liste des planètes à visiter en regardant si elle possède un échantillon à prendre*/
    public ArrayList<Planete> PlaneteAV() {
     ArrayList<Planete> PlaneteAV = new ArrayList<Planete>();
+    PlaneteAV.add(planeteActuL(getSimulatedvoyageur().getPosBody())); 
     ArrayList<Planete> ListePlanete = getListPlanete(); 
     for (int i=0; (i<ListePlanete.size()); i++) {
-    	if ((ListePlanete.get(i).getEchantillonRoche()!= null) || (ListePlanete.get(i).getEchantillonSol()!= null)) {
+    	if (((ListePlanete.get(i).getEchantillonRoche()!= null) || (ListePlanete.get(i).getEchantillonSol()!= null)) && (ListePlanete.get(i)!= PlaneteAV.get(0))){
     		PlaneteAV.add(ListePlanete.get(i)); 
     	}
     }
@@ -176,8 +198,8 @@ public class Voyage extends AbstractVoyage {
  	   else if ((RY==PiY)&&(RX<PiX)) {
  		   directionPP[i]="N"; 
  	   }
- 	   else if ((RY==PiY)&& (RX>PiX)) {
- 		   directionPP[i]= "S"; 
+ 	   else if ((RY==PiY)&&(RX>PiX)) {
+ 		   directionPP[i]="S"; 
  	   }
  	   }
     return directionPP; 
@@ -350,8 +372,9 @@ public class Voyage extends AbstractVoyage {
     /*on crée la méthode factorielle*/
     public int fact(int n) {
     	int result;
-    	if(n==1)
-    	return 1;
+    	if(n==1) {
+    		return 1;
+    	}
     	result = fact(n-1) * n;
     	return result;
     	}
@@ -392,97 +415,80 @@ public class Voyage extends AbstractVoyage {
 
     }
     
-    /*On crée la méthode qui renvoie pour une planète donnée les planètes sur lesquelles on peut aller
-     * et vérifiant les conditions suivantes : sans échantillon, et accessible. */
-    public ArrayList<Planete> PlanetePossible(Planete PlaneteActuL) {
-    	
-    	ArrayList<Planete> PlanetePossible = new ArrayList<Planete>();  
-    	ArrayList<Planete> PlaneteSS = new ArrayList<Planete>(); /*Planetes sans échantillons*/
-    	for(int i=0; (i< getListPlanete().size()); i++ ) {
-    		if ((getListPlanete().get(i).getEchantillonRoche()== null) && (getListPlanete().get(i).getEchantillonSol()== null)) {
-    			PlaneteSS.add(getListPlanete().get(i)); 
-    		} 
+    /*On crée la methode qui permet de vérifier si 2 listes de planètes ont des planètes communes*/
+    public ArrayList<Planete> Planetecommunes (ArrayList<Planete> a, ArrayList<Planete> b) {
+    	ArrayList<Planete> Planetecommunes = new ArrayList<Planete>();    	
+    	for (int i=0; (i<a.size()); i++) {
+    		for ( int j=0; (j<b.size()); j++) {
+    			if (a.get(i)==b.get(j)) {
+    				Planetecommunes.add(b.get(j)); 
+    			}
+    		}
     	}
-    	for (int i=0; (i<PlaneteActuL.getListAccessibilite().size()); i++) {
-			if (PlaneteSS.contains(PlaneteActuL.getListAccessibilite().get(i))) {
-				PlanetePossible.add(PlaneteActuL.getListAccessibilite().get(i)); 
-				}
-			}
-    	return PlanetePossible; 
-				
+    	return Planetecommunes; 
     }
-    
-    public void cheminrecursif(Planete PlaneteActuL, Planete PlaneteFin,indice) {
-    	ArrayList<Planete> PlanetePossible= PlanetePossible(PlaneteActuL); 
-    	while (PlaneteActuL!=PlaneteFin) {
-    		
-    	}
-    	
-    }
-    
 
     /**/
-    public ArrayList<Planete> cheminopt(Planete a, Planete b) {
-    	ArrayList<Planete> PlaneteAV = PlaneteAV();
+    public ArrayList<Planete> cheminopt(Planete a, Planete b, ArrayList<Planete> Visitee) {
+    	
     	ArrayList<Planete> cheminopt =new  ArrayList<Planete>();
-    	ArrayList<Planete> PlaneteSS = new ArrayList<Planete>(); /*Planetes sans échantillons*/ 
+    
     	cheminopt.add(a);
-    	Planete PlaneteActuL = a;
-    	ArrayList<Planete> PlanetePossible = new ArrayList<Planete>(); 
-    	for(int i=0; (i< getListPlanete().size()); i++ ) {
-    		if ((getListPlanete().get(i).getEchantillonRoche()== null) && (getListPlanete().get(i).getEchantillonSol()== null)) {
-    			PlaneteSS.add(getListPlanete().get(i)); 
-    		} 
-    	}
+    	
     	float distancemin= Float.MAX_VALUE;
-    	float distanceparcourue;
-    	if (a.getListAccessibilite().contains(b)) {
-    		distancemin=distance(a,b);
-    		cheminopt.add(b); 
-    		}
-    	else { 
-    		PlanetePossible= PlanetePossible(PlaneteActuL); 
-    		for (int j = 0; j<(PlanetePossible.size()); j++) {
-    			
-    		}
-    		
-    				
-    			}
-    			
-    		
-    		
-    	
-    	
-    	
+    	float distanceparcourue = 0;
+    	float dist_total = 0;
+    	Planete alternative = b; 
+    	 if (a.getListAccessibilite().contains(b)) {
+             distancemin=distance(a,b);
+             dist_total=dist_total+ distancemin;
+             cheminopt.add(b); 
+             }
+    	 else if (Planetecommunes(Planetecommunes(a.getListAccessibilite(),b.getListAccessibilite()), Visitee).size() == 0) {
+    		 cheminopt.remove(a); 
+    	 } 
+    	 else { 
+    		 for(int i=0;i<Visitee.size(); i++){
+
+             if ((Visitee.get(i).getListAccessibilite().contains(b)) && (a.getListAccessibilite().contains(Visitee.get(i)))){
+            	 distanceparcourue=distance(Visitee.get(i),b) + distance(a,Visitee.get(i));
+                 if (distanceparcourue< distancemin) {
+                     distancemin=distanceparcourue; 
+                     alternative = Visitee.get(i);  
+     
+             }
+             }
+    		 }
+    		 cheminopt.add(alternative); 
+    		 cheminopt.add(b); 
+    	 }
     	return cheminopt; 
+    		
+    		 
     }
     
+   public float distancetotale(ArrayList<Planete> cheminopt) {
+	   float distancetotale=0; 
+	   for (int i=0; (i<(cheminopt.size()-1)); i++) {
+		   distancetotale+=distance(cheminopt.get(i), cheminopt.get(i+1)); 
+	   }
+	   if (cheminopt.size()==0) {
+		   distancetotale=Float.MAX_VALUE; 
+	   }
+	   return distancetotale; 
+	   
+   }
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     @Override
     public void lancementSimuler() { 
     	afficheEcran();
+    	wait(1500); 
         // TODO Auto-generated method stub
-    	/*On crée la matrice des distances entre chaque planète*/
+    	 
     	int n = getListPlanete().size(); 
     	float[][] M_distance=new float[n][n];
         for(int i=0;i<n; i++) {
@@ -493,81 +499,92 @@ public class Voyage extends AbstractVoyage {
                 
             }
         }
+    	
         /*On regarde les planètes sur lesquelles on doit aller*/
         ArrayList<Planete> PlaneteAV= PlaneteAV();
+         
+        ArrayList<Planete> Liste_PPhoto= new ArrayList<Planete>(); /* Liste des planètes prises en photo*/
         /*pour chaque chemin donné on va regarder comment l'executer de façon optimale*/
         /*On fera le calcul pour toutes les permutations possibles de chemin comprenant les planètes à visiter*/
         /*On comparera les chemins grâce aux distances en supposant que le chemin avec la distance minimal induira une energie dépensée minimale aussi*/
-        int nbrcas = fact(PlaneteAV.size());
-        int indice=0;
-        ArrayList<Planete> PermutationMin = PlaneteAV; /* c'est le chemin optimal, on l'initialise au chemin basique PlaneteAV*/
+        int nbrcas = fact(PlaneteAV.size()-1);
+        int indice=1;
+        ArrayList<Planete> Dejavu= new ArrayList<Planete>();
+        int test = 0; 
+       
         float distancemin = Float.MAX_VALUE;
-        float distanceparcourue; 
+        float distanceparcourue=0;
+        ArrayList<Planete> Visitee=new ArrayList<Planete>(); 
+        ArrayList<Planete> cheminfinal= new ArrayList<Planete>(); /* c'est le chemin optimal*/
+        ArrayList<Planete> trajeteff = new ArrayList<Planete>(); 
         for (int i=0; (i<nbrcas); i++ ) {
         	
+        	Visitee.add(PlaneteAV.get(0)); 
+        	for (int j= 0; (j<(PlaneteAV.size()-1)); j++) {
+        		distanceparcourue+=distancetotale(cheminopt(PlaneteAV.get(j), PlaneteAV.get(j+1),Visitee));
+        		Visitee.add(PlaneteAV.get(j+1)); 
+        		trajeteff.addAll(cheminopt(PlaneteAV.get(j), PlaneteAV.get(j+1), Visitee)); 
+        	}
         	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
+        	if (distanceparcourue<distancemin) {
+        		cheminfinal.clear(); 
+        		distancemin=distanceparcourue;
+        		cheminfinal.addAll(trajeteff); 
+        		
+        	}
+        	distanceparcourue=0; 
+        	trajeteff.clear();
+        	Visitee.clear();
+        	if (indice<PlaneteAV.size()-2) {
+        		indice=indice+1; 
+        		}
+        	else {
+        		indice=1; 
+        	}
+
         	PlaneteAV= permutation(PlaneteAV,indice); 
         }
-    	
-    	/*On cherche la planète sur laquelle se trouve le robot*/
-    	Position posr = getSimulatedvoyageur().getPosBody(); 	/* position du robot et donc de la planète sur laquelle se trouve le robot*/
-    			/* position de la i ème planète de la liste*/ 
-    	int indp=0;  												
-    	for (int i = 0; (i<(getListPlanete().size())); i++) {
-    		Position posi = getListPlanete().get(i).getPos();	/* indice de la planète dans la liste de planètes*/
-    		if ((posr.getX()== posi.getX())  && (posr.getY()== posi.getY())) {
-    			indp = i;      			
-    		}
-    		
-    	}
-    	//On cherche la distance minimale parmis les planètes accessibles
+        for (int w=0; (w<cheminfinal.size()) ; w++) {
+        	if (Dejavu.contains(planeteActuL(getSimulatedvoyageur().getPosBody()))) {
+        		test = 1; 
+        	}
+        	else {
+        		test=0; 
+        	}
+        	if (test==0){
+        		getSimulatedvoyageur().takePicture(planeteActuL(getSimulatedvoyageur().getPosBody()));
+            	Liste_PPhoto.add(planeteActuL(getSimulatedvoyageur().getPosBody()));
+            	
 
-        // indice de la planète ou on est: indp
-
-        // On connait l'indice de la planète ou l'ont est
-        // ensuite on doit recup les planetes accesibles depuis celle ou on est , et on creer
-        //la liste avec les distances!
-        //ensuite on cherche la distance minimale
-    	
-    	Planete Planete_acc = getListPlanete().get(indp);
-    	ArrayList<Planete> Liste_acc = Planete_acc.getListAccessibilite(); 
-    	float [] distance_acc = new float [Liste_acc.size()];
-    	float min = Float.MAX_VALUE;
-    	int ind_PC=0; 
-    	for (int i = 0; (i<(distance_acc.length)) ; i++ ) {
-    		Position dp = Liste_acc.get(i).getPos(); 
-    		distance_acc[i]= (float) Math.sqrt(Math.pow((posr.getX()-dp.getX()), 2)+Math.pow((posr.getY()-dp.getY()), 2));
-    		if (distance_acc[i] < min) {
-                    min = distance_acc[i];
-    				ind_PC=i;   				
-            }
-    	
-    	}
-
-    	
-
-            /* il faut prendre la liste des planètes visibles pour prendre en photo toutes les planètes*/
-            /* indp est l'indice de la planète sur laquelle se trouve le robot*/
-            /*Planete Planete_acc = getListPlanete().get(indp); (planète sur laquelle on est)*/
+            	Dejavu.add(planeteActuL(getSimulatedvoyageur().getPosBody())); 
+            	getSimulatedvoyageur().takeEchantillonSol(planeteActuL(getSimulatedvoyageur().getPosBody()));
+            	
+            	getSimulatedvoyageur().takeEchantillonRoche(planeteActuL(getSimulatedvoyageur().getPosBody()));
+        	}
+        	
+        	/* il faut prendre la liste des planètes visibles pour prendre en photo toutes les planètes*/
+            
+            
             /* On part du principe qu'on ne prend en photo la planète visible seulement si elle ne possède pas d'échantillon ,
              * car si elle possède un échantillon on prendra la photo lorsque l'on ira sur la planète*/
             /*On doit aussi vérifier qu'on ne possède pas déja la planète en photo*/
             
-           ArrayList<Planete> Liste_PPhoto= new ArrayList<Planete>(); /* Liste des planètes prises en photo*/
-           ArrayList<Planete> Liste_vis = Planete_acc.getListVisibilite(); /* planètes visibles d'où on est*/
+           int test2=0; 
+           ArrayList<Planete> Liste_vis = planeteActuL(getSimulatedvoyageur().getPosBody()).getListVisibilite(); /* planètes visibles d'où on est*/
            ArrayList<Planete> Liste_PP = new ArrayList<Planete>(); /* Liste des planètes à prendre en photo*/
-           for (int i=0; (i<Liste_vis.size());i++ ) {
-        	   for (int j=0; (i<Liste_acc.size()); j++) {
+           for (int z=0; (z<Liste_vis.size());z++ ) {
+        	   for (int j=0; (j<planeteActuL(getSimulatedvoyageur().getPosBody()).getListAccessibilite().size()); j++) {
         		   for (int k=0; (k<Liste_PPhoto.size()); k++) {
-        			   if ((Liste_vis.get(i).getPos()!= Liste_acc.get(j).getPos()) && (Liste_vis.get(i).getPos()!= Liste_PPhoto.get(k).getPos())) {
-        				   Liste_PP.add(Liste_vis.get(i));        			   
+        			   if ((Liste_vis.get(z).getPos()!= planeteActuL(getSimulatedvoyageur().getPosBody()).getListAccessibilite().get(j).getPos()) && (Liste_vis.get(z).getPos()!= Liste_PPhoto.get(k).getPos())) {
+        				   if (Liste_PP.contains(Liste_vis.get(z))){
+        					   test2=1;}
+        				   else {
+        					   test2=0;}
+        				   if (test2==0) {
+        					   Liste_PP.add(Liste_vis.get(z));
+        				   }
+        				  
+        				    
         			   }
         		   }
         	   }	   
@@ -582,6 +599,9 @@ public class Voyage extends AbstractVoyage {
            
            String prochainedirection;
            Planete PlanetePhoto= new Planete();
+           //
+          
+           //
            String[] directionPP = PositionPlanete(Liste_PP); /*renvoie la liste des directions des planètes à  prendre en photo*/ 
            String directionR= getSimulatedvoyageur().getDirection(); /*Direction du robot*/
            for (int i=0; (i < directionPP.length); i++ ) {
@@ -615,12 +635,46 @@ public class Voyage extends AbstractVoyage {
         	  			   
            }
            
+	
 
-               
-    		
-    	afficheEcran();    	}	
-    	
+        if (w<cheminfinal.size()-1) {  
+        	avancer(cheminfinal.get(w+1).getPos()); }
+        /*on affiche le trajet du robot*/
+        afficheEcran(); 	
+       	wait(1500); 
+       	
+        
+        }
+
+   /*On affiche dans l'ordre où on a pris en photo les planètes au cours de notre
+    * voyage, l'image de chaque planète ainsi que les échantillons de sol puis de roche si il y'a.*/     
+for (int i=0; (i<Liste_PPhoto.size()) ; i++)   	{
+	AbstractAnimation aa = new AnimationBisligne();
+		aa.setEcranDeb(ListScreen.space()); 
+		aa.setEcranFin(Liste_PPhoto.get(i).getImage());	
+		aa.runAnimation();
+		if (Liste_PPhoto.get(i).getEchantillonSol()!=null) {
+			AbstractAnimation bb = new AnimationDiag();
+			bb.setEcranDeb(ListScreen.space());
+			
+			bb.setEcranFin(Liste_PPhoto.get(i).getEchantillonSol());	
+			bb.runAnimation();
+		}
+		if (Liste_PPhoto.get(i).getEchantillonRoche()!=null) {
+			AbstractAnimation cc = new AnimationByColumn();
+			cc.setEcranDeb(ListScreen.space());
+			
+			cc.setEcranFin(Liste_PPhoto.get(i).getEchantillonRoche());	
+			cc.runAnimation();
+		}
+		
+			
+	
+}	
+
 }
+}
+
 
 
 

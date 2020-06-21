@@ -9,12 +9,12 @@ import fr.emac.gipsi.gsi.screen.Screen;
  * @author truptil
  *
  */
-public class Animationligne extends AbstractAnimation{
+public class AnimationDiag extends AbstractAnimation{
  
     /**
      * 
      */
-    public Animationligne() {
+    public AnimationDiag() {
         
     }
 
@@ -22,12 +22,14 @@ public class Animationligne extends AbstractAnimation{
     public void runAnimation() {
         showScreen(ecranDeb);
         ecranInt=copyScreen(ecranDeb);
-        for(int ligne=0;ligne<ecranInt.getLigMax()+1;ligne++) {
+        for(int k=0;k<26*2;k++) {
             System.out.println("startSend");
             this.showScreen(ecranInt);
-            for(int col=0;col<ecranInt.getColMax()+1;col++) {
-                ecranInt.updateColorByXY(ligne, col, ecranFin.getColorByXY(ligne,col));
-            }
+            for(int j=0;j<=k;j++) {
+                int i = k-j;
+                        if (i<26 && j<26) {
+                ecranInt.updateColorByXY(i, j, ecranFin.getColorByXY(i,j));
+            }}
             this.wait(100);
             
         }

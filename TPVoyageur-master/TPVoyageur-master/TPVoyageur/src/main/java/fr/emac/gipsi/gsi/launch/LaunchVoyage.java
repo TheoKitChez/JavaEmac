@@ -28,51 +28,90 @@ public class LaunchVoyage {
 		
 		Planete p1 = new Planete();
 		p1.setColorName("DarkSalmon");
-		p1.setImage(ListScreen.first());
-		p1.setEchantillonRoche(ListScreen.second());
-		p1.setEchantillonSol(ListScreen.first());
+		p1.setImage(ListScreen.bat());
+		p1.setEchantillonRoche(ListScreen.PowerStone());
+		p1.setEchantillonSol(ListScreen.batlogo());
 		p1.setRayon(0);
-		p1.getPos().setX(2);
-		p1.getPos().setY(2);
+		p1.getPos().setX(1);
+		p1.getPos().setY(1);
 		 
 		
 		
 		Planete p2 = new Planete();
 		p2.setColorName("DeepPink");
-		p2.setImage(ListScreen.first());
-		p2.setEchantillonRoche(ListScreen.second());
-		p2.setEchantillonSol(ListScreen.first());
+		p2.setImage(ListScreen.Captain());
+		p2.setEchantillonRoche(ListScreen.RealityStone());
+		p2.setEchantillonSol(ListScreen.captlogo());
 		p2.setRayon(0);
-		p2.getPos().setX(5);
-		p2.getPos().setY(5);
-		p2.getListAccessibilite().add(p1);
+		p2.getPos().setX(2);
+		p2.getPos().setY(2);
 		
 		
 		
 		Planete p3= new Planete();
 		p3.setColorName("Green");
-		p3.setImage(ListScreen.first());
-		p3.setEchantillonRoche(ListScreen.second());
-		p3.setEchantillonSol(ListScreen.first());
+		p3.setImage(ListScreen.Hulk());
+		p3.setEchantillonSol(ListScreen.batlogo());
 		p3.setRayon(0);
-		p3.getPos().setX(7);
+		p3.getPos().setX(1);
 		p3.getPos().setY(5);
-		p3.getListAccessibilite().add(p1);
-		
 		
 
-		p1.getListAccessibilite().add(p2);
+		
+		Planete p4= new Planete();
+		p4.setColorName("Red");
+		p4.setImage(ListScreen.ww());
+		p4.setEchantillonRoche(ListScreen.SpaceStone());
+		p4.setEchantillonSol(ListScreen.wwlogo());
+		p4.setRayon(0);
+		p4.getPos().setX(6);
+		p4.getPos().setY(5);
+		
+	
+
+		Planete p5= new Planete();
+		p5.setColorName("Yellow");
+		p5.setImage(ListScreen.IronMan());
+		p5.setRayon(0);
+		p5.getPos().setX(3);
+		p5.getPos().setY(1);
+		
 		p1.getListAccessibilite().add(p3); 
+		p1.getListAccessibilite().add(p2); 
+		
+		p2.getListAccessibilite().add(p1);
+		p2.getListAccessibilite().add(p4);
+		p2.getListAccessibilite().add(p3);
+		
+		p3.getListAccessibilite().add(p1);
+		p3.getListAccessibilite().add(p2);
+		
+		
+		p4.getListAccessibilite().add(p2);
+		
+		
+		p5.getListVisibilite().add(p4); 
+		p5.getListVisibilite().add(p2); 
+		p5.getListVisibilite().add(p1);
+		
+		p1.getListVisibilite().add(p5);
+		p2.getListVisibilite().add(p5);
+		p4.getListVisibilite().add(p5);
+		
+		
+		
 		listPlanete.add(p1);
 		listPlanete.add(p2);
 		listPlanete.add(p3);
+		listPlanete.add(p4);
+		listPlanete.add(p5);
 		
 		AbstractVoyageur simulatedVoyageur = new VoyageurSimuler();
 		
 		simulatedVoyageur.getPosTete().setX(listPlanete.get(0).getPos().getX());
-		simulatedVoyageur.getPosTete().setY(listPlanete.get(0).getPos().getY());
+		simulatedVoyageur.getPosTete().setY(listPlanete.get(0).getPos().getY()+1);
 		simulatedVoyageur.getPosBody().setX(listPlanete.get(0).getPos().getX());
-		simulatedVoyageur.getPosBody().setY(listPlanete.get(0).getPos().getY()-1);
+		simulatedVoyageur.getPosBody().setY(listPlanete.get(0).getPos().getY());
 		simulatedVoyageur.setDirection("E");
 		
 		Voyage voyage = new Voyage(listPlanete, simulatedVoyageur);
@@ -81,6 +120,7 @@ public class LaunchVoyage {
 	}
 
 }
+
 
 
 

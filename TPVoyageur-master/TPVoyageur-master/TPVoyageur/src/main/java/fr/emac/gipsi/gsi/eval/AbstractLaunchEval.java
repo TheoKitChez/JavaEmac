@@ -28,9 +28,19 @@ public abstract class AbstractLaunchEval {
 	public ArrayList<Screen> addScreens2ListOfScreen(){
 		// ajouter vos ecrans
 		ArrayList<Screen> listOfScreen = new ArrayList<>();
-		listOfScreen.add(ListScreen.first());
-		listOfScreen.add(ListScreen.second());
-		listOfScreen.add(ListScreen.first());
+		listOfScreen.add(ListScreen.Hulk());
+		listOfScreen.add(ListScreen.Captain());
+		listOfScreen.add(ListScreen.ww());
+		listOfScreen.add(ListScreen.IronMan()); 
+		listOfScreen.add(ListScreen.bat());
+		listOfScreen.add(ListScreen.batlogo()); 
+		listOfScreen.add(ListScreen.PowerStone());
+		listOfScreen.add(ListScreen.RealityStone());
+		listOfScreen.add(ListScreen.SpaceStone());
+		listOfScreen.add(ListScreen.TimeStone()); 
+		listOfScreen.add(ListScreen.wwlogo());
+		listOfScreen.add(ListScreen.captlogo());
+		listOfScreen.add(ListScreen.space());
 		
 		return listOfScreen;
 	}
@@ -61,9 +71,9 @@ public abstract class AbstractLaunchEval {
 			}			
 		}
 		simulatedVoyageur.getPosTete().setX(listPlanete.get(0).getPos().getX());
-		simulatedVoyageur.getPosTete().setY(listPlanete.get(0).getPos().getY());
+		simulatedVoyageur.getPosTete().setY(listPlanete.get(0).getPos().getY()+1);
 		simulatedVoyageur.getPosBody().setX(listPlanete.get(0).getPos().getX());
-		simulatedVoyageur.getPosBody().setY(listPlanete.get(0).getPos().getY()-1);
+		simulatedVoyageur.getPosBody().setY(listPlanete.get(0).getPos().getY());
 		simulatedVoyageur.setDirection("E");
 		
 		Voyage voyage = new Voyage(listPlanete, simulatedVoyageur);
